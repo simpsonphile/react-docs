@@ -1,0 +1,74 @@
+---
+title: Readability
+---
+
+## Naming
+
+### Naming conventions
+
+- Component's file names, component's default export, classes should be written in PascalCase,
+- other files should be written in kebab-case,
+- variables, functions should be written in camelCase
+- Constants should be written in UpperCase,
+
+Component file names should be the same as component default export names
+
+### More meaningful names
+
+- boolean variables should start with has, is, etc.
+- functions should start with verb e.g: get, put, add, filter etc.
+
+### Component names
+
+Most IDEs sort files by names so it's good idea to name component files with most important noun for better navigation. This way components are grouped
+
+```
+// good
+components
+ ┣ ButtonBase
+ ┣ ButtonPrimary
+ ┣ ButtonPrimaryShort
+ ┣ ListBase
+ ┗ ListPrimary
+
+ // bad
+components
+ ┣ BaseButton
+ ┣ BaseList
+ ┣ PrimaryButton
+ ┣ PrimaryList
+ ┗ PrimaryShortButton
+```
+
+### Type names (not sure)
+
+Prefix interface with I and types with T
+
+## Components body order
+
+```tsx
+export default function Icon(props: IIconProps): React.ReactElement {
+    const { color, size, name, hasStroke, strokeWidth } = props;
+
+    const xlinkHref = `/app/svg-symbols.svg#${name}`;
+
+    const colorClass = getColorClass(color);
+
+    return (
+        <span
+            className={classNames(styles.icon, {
+                [styles[`icon--s-${size}`]]: !!size,
+                [styles[`icon--${name}`]]: !!name,
+                [styles[`icon--stroke`]]: hasStroke,
+                [styles[`icon--stroke-${strokeWidth}`]]:
+                    !!strokeWidth,
+                [`${colorClass}`]: !!colorClass,
+            })}
+        >
+            <svg aria-hidden="true">
+                <use xlinkHref={xlinkHref} />
+            </svg>
+        </span>
+    );
+}
+```

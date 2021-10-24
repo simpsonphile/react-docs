@@ -21,6 +21,8 @@
 
 - label: 'Introduction'
   link: '/'
+- label: 'Readability'
+  link: '/readability'
 - label: 'Redux'
   items:
     - label: 'Vocabulary'
