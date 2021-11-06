@@ -22,7 +22,11 @@
 - label: 'Introduction'
   link: '/'
 - label: 'Readability'
-  link: '/readability'
+  items:
+  - label: 'Naming'
+    link: '/readability/naming'
+  - label: 'Order'
+    link: '/readability/order'
 - label: 'Redux'
   items:
     - label: 'Concepts'
