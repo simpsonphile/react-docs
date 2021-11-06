@@ -1,0 +1,86 @@
+---
+title: Concepts
+---
+
+## Action Names
+
+Action names are strings used by reducer to determine with action should be run.
+
+```ts
+const ADD_POST = 'ADD_POST'
+```
+
+## Reducer
+
+Reducer is a pure function that accepts state and action and return new computed state.
+
+```ts
+export default function reducer(state = {}, action = {}) {
+  if (action.type === SET_PLAYERS_INFO) {
+    // do reducer stuff
+  }
+
+  if (action.type === UPDATE_PLAYER_POSITION_CORDS && action.cords.x && action.cords.y) {
+    return {
+      ...state,
+      playerCords: action.cords,
+    }
+  }
+
+  default: return state;
+}
+```
+
+## Action Creators
+
+To make changes to redux store state we use ```dispatch``` method that accepts object with one required property ```type``` and unlimited optional properties with data.
+Instead of dispatching with plain objects it's better to create functions that accepts parameters and returns objects. This way we have cleaner UI,
+meaningful names and hints with accepted parameters
+
+```ts
+// worse
+store.dispatch({
+  { type: SET_PLAYERS_INFO, playersInfo }
+})
+
+// better
+export function setPlayersInfo(playersInfo) {
+  return { type: SET_PLAYERS_INFO, playersInfo };
+}
+
+store.dispatch(setPlayersInfo(playersInfo))
+```
+
+## Thunks
+
+Thunks are methods that accept parameters and return async methods that can interact with ```dispatch``` and ```getState``` methods.
+They are often used to populate store with outside data. We can chain Thunks.
+
+```ts
+export const fetchPlayerInfo = (playerId) => async (dispatch, getState) => {
+  const response = await client.get(`/player/${playerId}`);
+
+  if (response.data.player) {
+    dispatch(updatePlayer(response.data.player))
+  }
+}
+```
+
+## Selectors
+
+Redux state should be as minimal as possible and derive additional values from selectors. Filtering, sorting, mapping etc
+should be done in selectors that return computed data.
+
+```ts
+export function getPlayerUnitVector(state) {
+  const { playerCords } = state;
+  const { x, y } = playerCords;
+
+  const vectorLength = Math.sqrt(Math.pow(x) + Math.pow(y));
+
+  return {
+    x: x / vectorLength,
+    y: y / vectoreLength,
+  }
+}
+```

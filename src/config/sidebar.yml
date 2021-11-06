@@ -25,5 +25,7 @@
   link: '/readability'
 - label: 'Redux'
   items:
-    - label: 'Vocabulary'
-      link: '/redux/vocabulary'
+    - label: 'Concepts'
+      link: '/redux/concepts'
+    - label: 'Structure'
+      link: '/redux/structure'
