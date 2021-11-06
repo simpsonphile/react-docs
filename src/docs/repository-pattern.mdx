@@ -1,0 +1,60 @@
+---
+title: Repository pattern
+---
+
+This pattern is used to separate server interface manipulation from client and holding it in one place. By using this pattern we
+make it easy to use fetching, adding, removing items from database because implementation is hidden and reusable.
+
+
+## Structure
+
+I like to hold it in ```repository``` folder where every subfolder is one module of repository and index file to import them to one default export
+
+Every module contains one index, as many submodules as needed and types files
+
+
+## Example module
+
+```tsx
+  export default class Players {
+    private baseUrl = '/players';
+
+    public async getAll(): Promise<Players> {
+        return API.get(this.baseUrl);
+    }
+
+    public async getPlayersByIds(playerIds: string[]): Promise<Players> {
+        const cfg = {
+          playerIds: playerIds.join(','),
+        };
+
+        return API.get(path.join(this.baseUrl, 'players'), cfg);
+    }
+
+    public async getPlayerDetails(
+        playerId: string,
+    ): Promise<PlayerDetails> {
+        return API.get(path.join(this.baseUrl, 'details', playerId));
+    }
+  }
+```
+
+## Example index
+
+```tsx
+import Players from '/players';
+import Teams from '/teams';
+
+export default {
+  players: new Players(),
+  teams: new Teams(),
+};
+```
+
+## Example usage
+
+```tsx
+import repository from '/repository';
+
+const players = await repositoy.players.getPlayersByIds([120, 121, 500]);
+```

@@ -21,6 +21,8 @@
 
 - label: 'Introduction'
   link: '/'
+- label: 'Repository pattern'
+  link: '/repository-pattern'
 - label: 'Readability'
   items:
   - label: 'Naming'
